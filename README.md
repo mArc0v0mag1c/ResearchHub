@@ -24,27 +24,13 @@ ResearchHub/
 
 ## Setup
 
-### Automatic (recommended)
-
-ResearchHub is auto-created the first time you run `create_project.sh` in either template:
-
-```bash
-# From ResearchProjectTemplate
-./create_project.sh MyProject
-
-# Or from ReadingProjectTemplate
-./create_project.sh MacroTheory
-```
-
-If `~/vscodeproject/ResearchHub/` doesn't exist, the script creates it with the full scaffold. If it already exists, it's left untouched.
-
-### Manual
-
 ```bash
 git clone https://github.com/mArc0v0mag1c/ResearchHub.git ~/vscodeproject/ResearchHub
 ```
 
 Then edit `profile.md` and `interests.md` to describe your research identity.
+
+Both templates' `create_project.sh` will check for ResearchHub and print setup instructions if it's missing. Skills work without it — you just won't get cross-project features (digests, methods tracking).
 
 ## How It Connects
 
