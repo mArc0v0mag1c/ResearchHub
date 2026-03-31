@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["mistralai>=1.0.0,<2.0.0", "python-dotenv", "pypdf"]
+# dependencies = ["mistralai", "python-dotenv", "pypdf"]
 # ///
 """
 Convert PDF to Markdown using Mistral OCR API.
@@ -16,7 +16,10 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
-from mistralai import Mistral
+try:
+    from mistralai import Mistral            # v1.x
+except ImportError:
+    from mistralai.client import Mistral     # v2.x
 from pypdf import PdfReader, PdfWriter
 import io
 
