@@ -42,54 +42,49 @@ def find_local_pdf(attachment_key):
 
     return None
 
+def _read_env_files():
+    """Read .env from project root, falling back to ~/.env."""
+    lines = []
+    for env_file in [Path(".env"), Path.home() / ".env"]:
+        if env_file.exists():
+            with open(env_file) as f:
+                lines.extend(f.readlines())
+    return lines
+
 def get_api_key():
     """
-    Read Zotero API key from the .env file.
+    Read Zotero API key from .env (project root) or ~/.env (global fallback).
 
     Returns:
         API key string, or None if not found
     """
-    env_file = Path(".env")
+    for line in _read_env_files():
+        line = line.strip()
+        if line.startswith("ZOTERO_API_KEY="):
+            return line.split("=", 1)[1]
 
-    if not env_file.exists():
-        print(f"Error: .env file not found at {env_file}", file=sys.stderr)
-        return None
-
-    with open(env_file) as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith("ZOTERO_API_KEY="):
-                return line.split("=", 1)[1]
-
-    print("Error: ZOTERO_API_KEY not found in .env file", file=sys.stderr)
+    print("Error: ZOTERO_API_KEY not found in .env or ~/.env", file=sys.stderr)
     return None
 
 def get_library_config():
     """
-    Read library configuration from .env file.
+    Read library configuration from .env (project root) or ~/.env (global fallback).
 
     Returns:
         Tuple of (library_type, library_id) or (None, None) if not found
     """
-    env_file = Path(".env")
-
-    if not env_file.exists():
-        print(f"Error: .env file not found at {env_file}", file=sys.stderr)
-        return None, None
-
     library_type = "user"  # default
     library_id = None
 
-    with open(env_file) as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith("ZOTERO_LIBRARY_TYPE="):
-                library_type = line.split("=", 1)[1]
-            elif line.startswith("ZOTERO_LIBRARY_ID="):
-                library_id = line.split("=", 1)[1]
+    for line in _read_env_files():
+        line = line.strip()
+        if line.startswith("ZOTERO_LIBRARY_TYPE="):
+            library_type = line.split("=", 1)[1]
+        elif line.startswith("ZOTERO_LIBRARY_ID="):
+            library_id = line.split("=", 1)[1]
 
     if not library_id:
-        print("Error: ZOTERO_LIBRARY_ID not found in .env file", file=sys.stderr)
+        print("Error: ZOTERO_LIBRARY_ID not found in .env or ~/.env", file=sys.stderr)
         return None, None
 
     return library_type, library_id

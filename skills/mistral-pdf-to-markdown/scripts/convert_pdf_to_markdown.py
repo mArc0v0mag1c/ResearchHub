@@ -25,13 +25,19 @@ import io
 
 
 def load_api_key():
-    """Load Mistral API key from .env"""
-    env_path = Path(".env")
-    load_dotenv(env_path)
+    """Load Mistral API key from project .env, falling back to ~/.env."""
+    # Try project root first, then home directory
+    for env_path in [Path(".env"), Path.home() / ".env"]:
+        if env_path.exists():
+            load_dotenv(env_path)
+
     api_key = os.getenv("mistral_api_key")
 
     if not api_key:
-        raise ValueError("Mistral API key not found in .env")
+        raise ValueError(
+            "Mistral API key not found. Set mistral_api_key in .env "
+            "(project root) or ~/.env (global fallback)."
+        )
 
     return api_key
 
