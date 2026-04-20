@@ -133,7 +133,16 @@ Shared skills auto-detect the project type:
 
 ## Global CLAUDE.md
 
-Both templates install `~/.claude/CLAUDE.md` on first run --- a user-level config loaded in every Claude Code session with shared writing standards, workflow orchestration, and cross-project conventions.
+The canonical global CLAUDE.md lives at the root of this repo (`CLAUDE.md`). It contains shared writing standards, workflow orchestration, and cross-project conventions — no personal identity (identity belongs in `profile.md` and `interests.md`).
+
+To use it as your Claude Code user-scope config (loaded in every session, every project):
+
+```bash
+# Single source of truth — symlink ~/.claude/CLAUDE.md to this repo's copy
+ln -sf ~/vscodeproject/ResearchHub/CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+Both `ResearchProjectTemplate` and `ReadingProjectTemplate` ship a copy of this file as `CLAUDE-global-template.md` that their `create_project.sh` installs on first run if `~/.claude/CLAUDE.md` does not already exist.
 
 ## Rules
 
