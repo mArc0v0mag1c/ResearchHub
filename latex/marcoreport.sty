@@ -1,0 +1,87 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{marcoreport}[2026/02/12 Marco's report style]
+
+% Spacing
+\RequirePackage{setspace}
+\onehalfspacing
+
+% Layout and formatting
+\RequirePackage{titlesec}
+\RequirePackage{etoolbox}
+\RequirePackage{indentfirst}
+\RequirePackage{booktabs}
+\RequirePackage{hyperref}
+\RequirePackage[
+  top=1in,
+  bottom=1in,
+  left=1.25in,
+  right=1.25in,
+  headheight=14pt
+]{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{graphicx}
+
+% Math
+\RequirePackage{amsfonts, amssymb, amsmath, amsthm, mathtools, bm}
+
+% TikZ
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta, positioning, calc}
+
+% tcolorbox
+\RequirePackage[most]{tcolorbox}
+\tcbset{
+  mynote/.style={
+    colback=gray!10,
+    colframe=gray!80,
+    boxrule=0.4pt,
+    arc=2mm,
+    left=1mm,
+    right=1mm,
+    top=0.5mm,
+    bottom=0.5mm,
+    enhanced,
+    sharp corners=south,
+    fonttitle=\bfseries,
+    before skip=5pt,
+    after skip=5pt
+  }
+}
+
+% Theorems
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newtcolorbox{remarkbox}[1][]{
+    enhanced,
+    breakable,
+    top=5mm,
+    bottom=5mm,
+    left=7mm,
+    right=5mm,
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title={#1},
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={colback=blue!75!black, colframe=blue!75!black}
+}
+
+% Macros
+\newcommand{\vct}[1]{\bm{#1}}      % vectors
+\newcommand{\mat}[1]{\mathbf{#1}}  % matrices
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\var}{\text{Var}}
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\DeclareMathOperator*{\argmax}{argmax}
+
+% Paragraph spacing
+\setlength{\parskip}{0.5\baselineskip}
+
+\endinput
